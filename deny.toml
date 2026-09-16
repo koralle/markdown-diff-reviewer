@@ -1,0 +1,46 @@
+# cargo-deny configuration
+#
+# Local:  mise run deny
+# CI:     deny job in .github/workflows/ci.yaml
+# Docs:   https://embarkstudios.github.io/cargo-deny/
+
+[advisories]
+# When ignoring an advisory, always record the reason alongside it
+# ignore = [{ id = "RUSTSEC-0000-0000", reason = "..." }]
+ignore = []
+
+[bans]
+# Multiple versions of the same crate are only a warning
+multiple-versions = "warn"
+# Wildcard version requirements ("*") in Cargo.toml are forbidden
+wildcards = "deny"
+# How to highlight the emitted dot graph on version duplication
+highlight = "all"
+
+[licenses]
+# Confidence threshold when inferring SPDX from license text
+confidence-threshold = 0.8
+# Do not warn when none of the allowed licenses are in use
+# (set back to "warn" if you want the allow list kept minimal)
+unused-allowed-license = "allow"
+# Permitted licenses (SPDX identifiers)
+allow = [
+  "MIT",
+  "Apache-2.0",
+  "Apache-2.0 WITH LLVM-exception",
+  "BSD-2-Clause",
+  "BSD-3-Clause",
+  "ISC",
+  "Unicode-3.0",
+  "Zlib",
+]
+
+[licenses.private]
+# Workspace crates with publish = false may omit a license field.
+# When publishing externally, drop publish = false and ship a LICENSE.
+ignore = true
+
+# Restrict where dependency crates may come from
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"

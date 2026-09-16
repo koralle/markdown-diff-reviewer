@@ -1,0 +1,19 @@
+name: Setup Rust toolchain
+description: Install the Rust toolchain declared in rust-toolchain.toml
+
+inputs:
+  cache:
+    description: Cache Cargo registry and build artifacts
+    required: false
+    default: "true"
+
+runs:
+  using: composite
+  steps:
+    # No toolchain / components specified here.
+    # When unspecified, actions-rust-lang/setup-rust-toolchain reads
+    # channel / profile / components from rust-toolchain.toml.
+    # actions-rust-lang/setup-rust-toolchain v2.0.0
+    - uses: actions-rust-lang/setup-rust-toolchain@ecabd13d1c56bd1345c230e542e9144811ad706f  # yamllint disable-line rule:line-length
+      with:
+        cache: ${{ inputs.cache }}
