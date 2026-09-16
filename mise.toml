@@ -1,0 +1,60 @@
+# Development tools
+#
+# - Keep cargo-nextest / cargo-machete / cargo-deny versions in sync
+#   with the tool: pins in .github/workflows/ci.yaml
+# - The Rust toolchain itself (incl. rustfmt / clippy) is managed
+#   by rust-toolchain.toml
+[tools]
+"cargo:cargo-nextest" = "0.9.144"
+"cargo:cargo-machete" = "0.9.2"
+"cargo:cargo-deny" = "0.20.2"
+
+# Git hooks
+"npm:lefthook" = "2.1.12"
+
+# Set up the dev environment (install tools + enable git hooks)
+[tasks.setup]
+description = "Install dev tools and enable git hooks"
+# First run: lefthook is not on PATH yet, so re-resolve via mise exec
+run = "mise install && mise exec -- lefthook install"
+
+# Format
+[tasks.fmt]
+description = "Format the code"
+run = "cargo fmt --all"
+
+[tasks.fmt-check]
+description = "Check formatting"
+run = "cargo fmt --all -- --check"
+
+# Lint
+[tasks.clippy]
+description = "Lint with Clippy"
+run = "cargo clippy --workspace --all-targets --all-features -- -D warnings"
+
+# Tests
+[tasks.test]
+description = "Run tests (nextest)"
+run = "cargo nextest run --workspace --all-features"
+
+[tasks.test-doc]
+description = "Run doc tests"
+run = "cargo test --doc --workspace --all-features"
+
+# Dependency crates
+[tasks.machete]
+description = "Detect unused crates"
+run = "cargo machete"
+
+[tasks.deny]
+description = "Check dependency policy (vulnerabilities / licenses)"
+run = "cargo deny --all-features --locked check"
+
+# Aggregates
+[tasks.check]
+description = "Check formatting and Clippy (pre-commit)"
+depends = ["fmt-check", "clippy"]
+
+[tasks.ci]
+description = "Run the same checks as CI (serially: mise run -j 1 ci)"
+depends = ["fmt-check", "clippy", "test", "test-doc", "machete", "deny"]
