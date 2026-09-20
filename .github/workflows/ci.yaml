@@ -73,18 +73,7 @@ jobs:
       - uses: ./.github/actions/setup-rust-toolchain
 
       # gpui-pre's Linux platform build deps (fontconfig, wayland, xkbcommon, ...)
-      - name: Install Linux dependencies
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends \
-            clang pkg-config \
-            libfontconfig-dev libfreetype-dev \
-            libwayland-dev wayland-protocols \
-            libxkbcommon-dev libxkbcommon-x11-dev \
-            libx11-xcb-dev libxcb-xkb-dev libxcb-xfixes0-dev \
-            libxcb-icccm4-dev libxcb-keysyms1-dev libxcb-randr0-dev \
-            libssl-dev libzstd-dev libvulkan1
+      - uses: ./.github/actions/install-linux-deps
 
       - run: |
           cargo clippy --workspace --all-targets --all-features -- -D warnings
@@ -143,18 +132,7 @@ jobs:
           tool: nextest@0.9.144
 
       # gpui-pre's Linux platform build deps (fontconfig, wayland, xkbcommon, ...)
-      - name: Install Linux dependencies
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends \
-            clang pkg-config \
-            libfontconfig-dev libfreetype-dev \
-            libwayland-dev wayland-protocols \
-            libxkbcommon-dev libxkbcommon-x11-dev \
-            libx11-xcb-dev libxcb-xkb-dev libxcb-xfixes0-dev \
-            libxcb-icccm4-dev libxcb-keysyms1-dev libxcb-randr0-dev \
-            libssl-dev libzstd-dev libvulkan1
+      - uses: ./.github/actions/install-linux-deps
 
       - run: cargo nextest run --workspace --all-features
 
