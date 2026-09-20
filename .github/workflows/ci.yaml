@@ -72,6 +72,9 @@ jobs:
 
       - uses: ./.github/actions/setup-rust-toolchain
 
+      # gpui-pre's Linux platform build deps (fontconfig, wayland, xkbcommon, ...)
+      - uses: ./.github/actions/install-linux-deps
+
       - run: |
           cargo clippy --workspace --all-targets --all-features -- -D warnings
 
@@ -127,6 +130,9 @@ jobs:
       - uses: taiki-e/install-action@3f74d7c16a4242f1c95561e98edc25d36adb4375
         with:
           tool: nextest@0.9.144
+
+      # gpui-pre's Linux platform build deps (fontconfig, wayland, xkbcommon, ...)
+      - uses: ./.github/actions/install-linux-deps
 
       - run: cargo nextest run --workspace --all-features
 

@@ -1,0 +1,19 @@
+name: Install Linux dependencies
+description: Install system libraries needed to build gpui-pre on Linux runners (no-op elsewhere)
+
+runs:
+  using: composite
+  steps:
+    - name: apt install
+      if: runner.os == 'Linux'
+      shell: bash
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y --no-install-recommends \
+          clang pkg-config \
+          libfontconfig-dev libfreetype-dev \
+          libwayland-dev wayland-protocols \
+          libxkbcommon-dev libxkbcommon-x11-dev \
+          libx11-xcb-dev libxcb-xkb-dev libxcb-xfixes0-dev \
+          libxcb-icccm4-dev libxcb-keysyms1-dev libxcb-randr0-dev \
+          libssl-dev libzstd-dev libvulkan1
