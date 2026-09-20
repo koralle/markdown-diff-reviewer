@@ -1,0 +1,13 @@
+# `bacon` (or `bacon run-ui`) rebuilds and relaunches mdr-ui on save.
+# This is restart-on-change, not state-preserving hot reload:
+# the app process is killed and a new window opens.
+# Use `bacon check` / `bacon clippy` for the usual lint loop.
+default_job = "run-ui"
+
+[jobs.run-ui]
+command = ["cargo", "run", "--package", "mdr-ui", "--color", "always"]
+need_stdout = true
+allow_warnings = true
+background = true
+on_change_strategy = "kill_then_restart"
+watch = ["crates"]
