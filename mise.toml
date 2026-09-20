@@ -12,6 +12,9 @@
 # Git hooks
 "npm:lefthook" = "2.1.12"
 
+# UI dev loop (see bacon.toml)
+"cargo:bacon" = "3.25.0"
+
 # Set up the dev environment (install tools + enable git hooks)
 [tasks.setup]
 description = "Install dev tools and enable git hooks"
@@ -49,6 +52,11 @@ run = "cargo machete"
 [tasks.deny]
 description = "Check dependency policy (vulnerabilities / licenses)"
 run = "cargo deny --all-features --locked check"
+
+# UI dev loop: rebuild + relaunch mdr-ui on save (restart, not hot reload)
+[tasks.ui]
+description = "Watch and relaunch the mdr-ui app via bacon"
+run = "bacon run-ui"
 
 # Aggregates
 [tasks.check]

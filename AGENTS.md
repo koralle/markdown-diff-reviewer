@@ -12,6 +12,8 @@ classifying changes as visible / source-only / cosmetic.
 - `mise run check` — fmt check + Clippy (runs on pre-commit)
 - `mise run test` — nextest (runs on pre-push, with `mise run deny`)
 - `mise run -j 1 ci` — everything CI runs, locally
+- `mise run ui` (or `bacon`) — rebuild + relaunch `mdr-ui` on save;
+  restarts the process, it does not preserve window state
 - Workspace lints deny `unwrap`/`expect`/`panic!`/`todo!`/`unimplemented!`/`dbg!`
 
 When working on Rust:
