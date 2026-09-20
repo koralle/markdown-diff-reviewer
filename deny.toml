@@ -8,6 +8,11 @@
 # When ignoring an advisory, always record the reason alongside it
 # ignore = [{ id = "RUSTSEC-0000-0000", reason = "..." }]
 ignore = []
+# Only fail when a workspace crate directly depends on an unmaintained
+# crate. Transitive deps of gpui-pre/gpui-kit (paste, instant,
+# rustls-pemfile, rustybuzz, ttf-parser) are flagged unmaintained with
+# no safe upgrade path.
+unmaintained = "workspace"
 
 [bans]
 # Multiple versions of the same crate are only a warning
@@ -33,6 +38,11 @@ allow = [
   "ISC",
   "Unicode-3.0",
   "Zlib",
+  # Used by transitive deps of gpui-pre/gpui-kit
+  "MPL-2.0",
+  "0BSD",
+  "CC0-1.0",
+  "bzip2-1.0.6",
 ]
 
 [licenses.private]
