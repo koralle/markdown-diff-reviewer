@@ -17,3 +17,9 @@ panic = "deny"
 todo = "deny"
 unimplemented = "deny"
 dbg_macro = "deny"
+
+[workspace.dependencies]
+# gpui-kit builds on Longbridge's published GPUI fork (`gpui-pre`),
+# re-exported as `gpui` — not the crates.io `gpui` crate.
+gpui = { package = "gpui-pre", version = "0.3.5" }
+gpui-kit = "0.6.4"
